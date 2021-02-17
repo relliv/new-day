@@ -1,0 +1,27 @@
+<a [routerLink]="['/day/book/', daybook.id]" class="daybook-card">
+  <div class="card h-100">
+    <div class="card-body px-3 py-3">
+      <!-- Book Title -->
+      <h5 class="card-title font-weight-normal">
+        <!-- <i [ngClass]="daybook.icon ? daybook.icon + ' mr-2' : 'mdi mdi-book-open-varian mr-2'"></i> -->
+        <!-- <mat-icon svgIcon="android"></mat-icon> -->
+        {{daybook.title}}
+      </h5>
+
+      <!-- Book Descripiton -->
+      <p class="card-text font-weight-light font-italic"
+        *ngIf="daybook.description.length < 100; else descriptionElseBlock;">
+        {{daybook.description}}
+      </p>
+
+      <!-- Book Descripiton Short -->
+      <ng-template #descriptionElseBlock>
+        <p class="card-text font-weight-light font-italic"
+          placement="bottom" ngbTooltip="{{daybook.description}}">
+        {{daybook.description | slice:0:100}}...
+      </p>
+      </ng-template>
+    </div>
+  </div>
+</a>
+

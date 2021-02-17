@@ -1,0 +1,38 @@
+mat-sidenav{
+  width: 320px;
+  box-shadow: 0px 0px 5px 0px rgba(163, 163, 163, 0.3) !important;
+}
+
+mat-nav-list{
+  padding: 45px 0x !important;
+}
+
+.mat-toolbar{
+  background: white;
+}
+
+.mat-drawer-side{
+  border: none;
+  padding-top: 35px;
+}
+
+.mat-nav-list {
+  margin: 5px 20px;
+  padding-top: 0;
+}
+
+.sidenav-container {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display: inherit;
+  transform: inherit;
+  background-color: #edf0f4;
+}
+
+@media (prefers-color-scheme: dark) {
+  .sidenav-container {
+    background-color: #1c1c1c;
+    color: #bababa !important;
+  }
+}

@@ -1,0 +1,17 @@
+.daybook-card{
+  text-decoration: unset !important;
+  color: #292727 !important;
+
+  .card{
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+
+    .card-title{
+      border-bottom: 1px solid #a2a2a2;
+      padding-bottom: 5px;
+    }
+  }
+
+  &:hover{
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.15);
+  }
+}

@@ -1,0 +1,37 @@
+<div [hidden]="!error" class="alert alert-danger">
+  {{ error }}
+</div>
+
+<fieldset [disabled]="isLoading">
+  <!-- Login Form -->
+  <form *ngIf="loginForm" (ngSubmit)="login()" [formGroup]="loginForm">
+      <div class="form-group">
+        <label class="d-block">
+          <input type="email" class="form-control form-control-rounded" placeholder="Email" formControlName="email">
+          <!-- <app-control-messages [control]="getFormControl['email']"></app-control-messages> -->
+        </label>
+      </div>
+      <div class="form-group">
+        <label class="d-block">
+          <input type="password" class="form-control form-control-rounded" placeholder="Şifre" formControlName="password">
+          <!-- <app-control-messages [control]="getFormControl['password']"></app-control-messages> -->
+        </label>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block btn-raised" type="submit" [disabled]="this.loginForm.invalid">
+          <span [hidden]="isLoading">Giriş Yap</span>
+          <span [hidden]="!isLoading">
+            <!-- <fa-icon [icon]="faAsterisk" [spin]="true"></fa-icon> -->
+          </span>
+        </button>
+      </div>
+      <div class="row">
+        <div class="col">
+          <a [routerLink]="['/auth/register']">Hesabın yok mu? Kayıt Ol!</a>
+        </div>
+        <div class="col">
+          <a class="float-right" [routerLink]="['/auth/forgot']">Şifremi unuttum?</a>
+        </div>
+      </div>
+  </form>
+</fieldset>

@@ -1,0 +1,21 @@
+<div class="row mb-4">
+  <div class="container-fluid text-center">
+    <h1>
+      {{daybook.title}}
+    </h1>
+    <p class="text-italic">
+      {{daybook.description}}
+    </p>
+  </div>
+</div>
+
+<div class="row" *ngIf="daybook.title">
+  <div *ngFor="let month of months"
+    class="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3 px-1 my-3">
+    <app-calendar-view [monthNumber]="month"
+      [daybook]="daybook"
+      (dayLoadingChange)="setStateToMonths($event)" [selectedDay]="selectedDay"></app-calendar-view>
+  </div>
+</div>
+
+<ngx-spinner name="monthsLoading" bdColor="#444548cc" [fullScreen]="false" type="ball-triangle-path" size="medium" *ngIf="daybookLoading"></ngx-spinner>

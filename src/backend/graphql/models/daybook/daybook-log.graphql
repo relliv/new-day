@@ -1,0 +1,81 @@
+# models
+type DaybookLog {
+    id: ID!
+    daybook_id: Int!
+    daybook_date_id: Int!
+    title: String
+    log: String
+    daybook_date: DaybookDate @hasOne(relation: "daybookDate")
+    created_at_time: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type DaybookDate {
+    id: ID!
+    daybook_id: Int!
+    target_date: Date!
+    logs: [DaybookLog] @hasMany
+    last_log: DaybookLog @hasOne(relation: "lastLog")
+    logs_count: Int! @count(relation: "logs")
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+extend type Query {
+    # Check daybook date exists
+    daybookDate(
+        where: _ @whereConditions(columns: ["daybook_id", "target_date"])
+    ): DaybookDate @first(model: "Day\\Daybook\\DaybookDate")
+}
+
+type Mutation {
+    # First log with target date
+    firstDaybookDateLog(input: FirstDaybookLogInput! @spread): DaybookLog! @create(model: "Day\\Daybook\\DaybookLog")
+
+    # new log
+    createDaybookDateLog(input: CreateDaybookLogInput @spread): DaybookLog! @create(model: "Day\\Daybook\\DaybookLog")
+
+    # update log
+    updateDaybookDateLog(input: UpdateDaybookLogInput @spread): DaybookLog! @update(model: "Day\\Daybook\\DaybookLog")
+}
+
+# Log inputs
+input FirstDaybookLogInput {
+    daybook_id: Int! @rules(apply: ["required"])
+    title: String
+    log: String
+    # daybook_date_id relation
+    daybook_date: CreateDaybookDateBelongsTo!
+}
+
+input CreateDaybookLogInput {
+    daybook_id: Int! @rules(apply: ["required"])
+    daybook_date_id: Int! @rules(apply: ["required"])
+    title: String
+    log: String
+}
+
+input UpdateDaybookLogInput {
+    id: ID!
+    title: String
+    log: String
+}
+
+# Date inputs
+input CreateDaybookDateInput {
+    daybook_id: ID!
+    target_date: Date!
+}
+
+input WhereDaybookDateInput {
+    daybook_id: ID!
+    target_date: Date!
+}
+
+input CreateDaybookDateBelongsTo {
+    connect: ID
+    upsert: CreateDaybookDateInput!
+#   update: UpdateUserInput
+#   upsert: UpsertUserInput
+}

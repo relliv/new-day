@@ -1,0 +1,48 @@
+
+
+<div [hidden]="!error" class="alert alert-danger">
+  {{ error }}
+</div>
+
+<div [hidden]="!message" class="alert alert-success">
+  {{ message }}
+</div>
+
+<fieldset [disabled]="isLoading">
+  <!-- Register Form -->
+  <form (ngSubmit)="register()" [formGroup]="registerForm">
+    <div class="form-group">
+      <label class="d-block">
+        <input type="text" name="name" class="form-control form-control-rounded" [placeholder]="'İsim'" formControlName="name">
+      </label>
+    </div>
+    <div class="form-group">
+      <label class="d-block">
+        <input type="email" class="form-control form-control-rounded" [placeholder]="'Email'" formControlName="email">
+      </label>
+    </div>
+    <div class="form-group">
+      <label class="d-block">
+        <input type="password" class="form-control form-control-rounded" [placeholder]="'Şifre'" formControlName="password">
+      </label>
+    </div>
+    <div class="form-group">
+      <label class="d-block">
+        <input type="password" class="form-control form-control-rounded" [placeholder]="'Şifre Tekrar'" formControlName="password_confirmation">
+      </label>
+    </div>
+    <div class="form-group">
+      <label class="d-block">
+        <a href="#" class="tn btn-link mb-3">Kayıt olarak hizmet şartlarımızı kabul etmiş sayılırsınız.</a>
+      </label>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary btn-block btn-raised" type="submit" [disabled]="!registerForm">
+        <span [hidden]="isLoading">Kayıt Ol</span>
+        <span [hidden]="!isLoading">
+        </span>
+      </button>
+    </div>
+    <a [routerLink]="['/auth/login']">Hesabın var mı? Giriş Yap!</a>
+  </form>
+</fieldset>

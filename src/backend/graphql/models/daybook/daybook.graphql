@@ -1,0 +1,32 @@
+"Base Entity"
+type Daybook {
+    id: ID!
+    title: String!
+    description: String
+    icon: String
+    color: String
+    archive: Boolean!
+    created_at: DateTime!
+    updated_at: DateTime!
+    logs: [DaybookLog!] @hasMany
+    logs_count: Int! @count(relation: "logs")
+    dates: [DaybookDate] @hasMany
+}
+
+extend type Query {
+    "Retrieve paginated items"
+    daybooks: [Daybook] @paginate(type: PAGINATOR, defaultCount: 10, maxCount: 50, model: "Day\\Daybook\\Daybook")
+    "Retrieve requested item"
+    daybook (id: ID! @eq): Daybook @find(model: "Day\\Daybook\\Daybook")
+}
+
+type Mutation {
+    "Create new record"
+    createDaybook(input: CreateDaybookInput! @spread): Daybook! @create(model: "Day\\Daybook\\Daybook")
+}
+
+input CreateDaybookInput {
+    title: String @rules(apply: ["required", "min:2", "max:100"])
+    icon: String @rules(apply: ["max:50"]),
+    color: String @rules(apply: ["max:150"])
+}

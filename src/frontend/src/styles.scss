@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
+
+/* Bootstrap 4.x */
+@import '~bootstrap/scss/bootstrap';
+
+/* Toastr Notifications */
+@import '~ngx-toastr/toastr';
+
+ngx-spinner .overlay {
+  background-color: #6880b5cc !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  ngx-spinner .overlay {
+    background-color: #444548cc !important;
+  }
+}
+
+.modal {
+  .modal-content {
+    border-radius: 20px;
+  }
+}
+
+.accordion {
+  .card {
+    overflow: hidden;
+    border-radius: 35px !important;
+    box-shadow: 0px 14px 80px rgba(14, 15, 18, 0.1);
+    margin-bottom: 35px;
+
+    .card-header {
+      background-color: #fff;
+      padding: 20px;
+    }
+  }
+}
+
+.ck-editor__editable_inline{
+  max-height: 500px;
+  line-height: 20px;
+}
+
