@@ -44,6 +44,8 @@ export class DashboardComponent implements OnInit {
     }) => {
       this.daybooks = data.daybooks;
       this.daybooksLoading = loading;
+
+      console.log(this.daybooks.data);
     });
   }
 

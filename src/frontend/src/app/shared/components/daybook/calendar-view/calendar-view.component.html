@@ -1,57 +1,53 @@
 <!-- Month View -->
 <div class="log-calendar">
-  <!-- Month Title -->
-  <div class="title">
-    {{monthName}} - {{currentYear}}
-  </div>
+    <!-- Month Title -->
+    <div class="title">
+        {{monthName}} - {{currentYear}}
+    </div>
 
-  <div class="d-flex flex-wrap justify-content-center">
-    <div *ngFor="let day of days">
-      <!-- Day Button Tooltip -->
-      <ng-template #dayTooltip>
-        <div *ngIf="day.daybookDate; else notLogged;">
-          <!-- Has Log -->
-          <div *ngIf="day.daybookDate.last_log; else daybookDateUpdatedAt" class="m-2">
-            <div class="border border-top-0 border-left-0 border-right-0 pb-2 mb-2">
-              Last Update: {{day.daybookDate.last_log.updated_at || '-'}}
-            </div>
-            <div>
-              Logs: {{day.daybookDate.logs_count || '0'}}
-            </div>
-          </div>
+    <div class="d-flex flex-wrap justify-content-center">
+        <div *ngFor="let day of days">
+            <!-- Day Button Tooltip -->
+            <ng-template #dayTooltip>
+                <div *ngIf="day.daybookDate; else notLogged;">
+                    <!-- Has Log -->
+                    <div *ngIf="day.daybookDate.last_log; else daybookDateUpdatedAt" class="m-2">
+                        <div class="border border-top-0 border-left-0 border-right-0 pb-2 mb-2">
+                            Last Update: {{day.daybookDate.last_log.updated_at || '-'}}
+                        </div>
+                        <div>
+                            Logs: {{day.daybookDate.logs_count || '0'}}
+                        </div>
+                    </div>
 
-          <!-- Day is Created but not logged -->
-          <ng-template #daybookDateUpdatedAt>
-            <div class="m-2">
-              <div class="border border-top-0 border-left-0 border-right-0 pb-2 mb-2">
-                Last Update: {{day.daybookDate.updated_at || '-'}}
-              </div>
-              <div>
-                Logs: {{day.daybookDate.logs_count || '0'}}
-              </div>
-            </div>
-          </ng-template>
-        </div>
+                    <!-- Day is Created but not logged -->
+                    <ng-template #daybookDateUpdatedAt>
+                        <div class="m-2">
+                            <div class="border border-top-0 border-left-0 border-right-0 pb-2 mb-2">
+                                Last Update: {{day.daybookDate.updated_at || '-'}}
+                            </div>
+                            <div>
+                                Logs: {{day.daybookDate.logs_count || '0'}}
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
 
-        <!-- No log for day -->
-        <ng-template #notLogged>
-          <div class="m-2">
-            Not Logged Yet
-          </div>
-        </ng-template>
-      </ng-template>
+                <!-- No log for day -->
+                <ng-template #notLogged>
+                    <div class="m-2">
+                        Not Logged Yet {{day.isToday ? '(Today)' : ''}}
+                    </div>
+                </ng-template>
+            </ng-template>
 
-      <!-- Day Button -->
-      <button
-        [ngClass]="'day filled-'+(day.isToday ? 'today-' : '')+(day.filledColorNumber ? day.filledColorNumber : '0')"
-        (click)="openDayLog(day)"
-        placement="bottom"
-        [ngbTooltip]="dayTooltip">
+            <!-- Day Button -->
+            <button [ngClass]="'day filled-'+(day.isToday ? 'today-' : '')+(day.filledColorNumber ? day.filledColorNumber : '0')" (click)="openDayLog(day)" placement="bottom" [ngbTooltip]="dayTooltip">
         {{day.number}}
       </button>
+        </div>
     </div>
-  </div>
 
-  <!-- <ngx-spinner [name]="'daySpinner-'+monthNumber" [fullScreen]="false"
+    <!-- <ngx-spinner [name]="'daySpinner-'+monthNumber" [fullScreen]="false"
     type="ball-triangle-path" size="default"></ngx-spinner> -->
 </div>
