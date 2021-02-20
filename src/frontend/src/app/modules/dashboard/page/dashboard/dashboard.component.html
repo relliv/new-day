@@ -1,18 +1,36 @@
 <div class="row">
-  <div class="container-fluid">
-    <div class="row">
-      <h1>rwerwrew</h1>
-      <div class="container-fluid" *ngIf="!daybooksLoading">
+    <div class="container-fluid">
         <div class="row">
-          <app-daybook-card *ngFor="let item of daybooks.data" [daybook]="item"
-            class="col-sm-12 col-md-6 col-lg-6 col-xl-4 mb-4">
-            <!-- DayBook Items -->
-          </app-daybook-card>
+            <div class="col-8">
+                <h2>
+                    Daybooks
+                </h2>
+            </div>
+
+            <div class="col-4">
+                <ng-template #addNew>
+                    <mat-icon #hidePanel svgIcon="plus" matListIcon></mat-icon>
+                    <span class="ml-1">
+                      Add New Daybook
+                    </span>
+                </ng-template>
+
+                <app-new-button class="float-right" [text]="addNew" [disabled]="daybooksLoading">
+                </app-new-button>
+            </div>
         </div>
-      </div>
+
+        <div class="row mt-5">
+            <div class="container-fluid" *ngIf="!daybooksLoading && daybooks">
+                <div class="row">
+                    <app-daybook-card *ngFor="let item of daybooks.data" [daybook]="item" class="col-sm-12 col-md-6 col-lg-6 col-xl-4 mb-4">
+                        <!-- DayBook Items -->
+                    </app-daybook-card>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <!-- Spinner  -->
-<ngx-spinner name="dataSpinner" type="ball-rotate" size="medium"></ngx-spinner>
+<ngx-spinner name="dataSpinner " type="ball-rotate " size="medium"></ngx-spinner>

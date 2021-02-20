@@ -36,6 +36,12 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadDaybooks();
+  }
+
+  public loadDaybooks(){
+    this.daybooksLoading = true;
+
     this.daybooksQuerySubscription = this.daybooksQuery
     .valueChanges
     .subscribe(({
@@ -45,15 +51,11 @@ export class DashboardComponent implements OnInit {
       this.daybooks = data.daybooks;
       this.daybooksLoading = loading;
 
-      console.log(this.daybooks.data);
+      console.log(this.daybooksLoading);
+
+      this.refreshUi();
     });
   }
-
-
-  /**
-   * get mind maps
-   */
-  public getMaps(): void {}
 
   /**
    * Update UI elements

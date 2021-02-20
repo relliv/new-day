@@ -10,11 +10,13 @@ import { DaybookCardComponent } from '@shared/components/daybook/daybook-card/da
 import { BreadcrumbComponent } from '@shared/components/common/breadcrumb/breadcrumb.component';
 import { LiveDatetimeComponent } from '@shared/components/common/live-datetime/live-datetime.component';
 import { MatIconModule } from '@angular/material/icon';
+import { NewButtonComponent } from './components/common/new-button/new-button.component';
 
 @NgModule({
   declarations: [
     DaybookCardComponent,
-    LiveDatetimeComponent
+    LiveDatetimeComponent,
+    NewButtonComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +40,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule,
     // custom components
     DaybookCardComponent,
-    LiveDatetimeComponent
+    LiveDatetimeComponent,
+    NewButtonComponent
   ]
 })
 export class SharedModule {}

@@ -1,1 +1,3 @@
-<p>new-button works!</p>
+<button class="btn btn-new" (click)="buttonClick.emit()" [disabled]="disabled">
+  <ng-container *ngTemplateOutlet="text || 'Add New'"></ng-container>
+</button>
