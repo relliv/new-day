@@ -12,7 +12,7 @@ class DaybooksData {
 }
 
 export class Daybooks {
-  data: Daybook[];
+  data: [];
   paginatorInfo: PaginatorInfo;
 }
 

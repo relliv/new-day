@@ -1,30 +1,30 @@
 <div>
-  <div class="mat-app-background">
-    <!-- Navbar -->
-    <!-- <app-nav (toggleSidenav)="sidenav.toggle()"></app-nav> -->
-    <app-nav></app-nav>
+    <div class="mat-app-background">
+        <!-- Navbar -->
+        <!-- <app-nav (toggleSidenav)="sidenav.toggle()"></app-nav> -->
+        <app-nav></app-nav>
 
-    <!-- Page Loader Indicator -->
-    <mat-progress-bar *ngIf="loading" color="accent" mode="indeterminate"></mat-progress-bar>
+        <!-- Page Loader Indicator -->
+        <mat-progress-bar *ngIf="loading" color="accent" mode="indeterminate"></mat-progress-bar>
 
-    <!-- Sidebar -->
-    <mat-sidenav-container class="sidenav-container">
-      <!-- <mat-sidenav #sidenav position="start" mode="push" class="mat-sidenav" opened="true" mode="side">
+        <!-- Sidebar -->
+        <mat-sidenav-container class="sidenav-container">
+            <!-- <mat-sidenav #sidenav position="start" mode="push" class="mat-sidenav" opened="true" mode="side">
         <mat-nav-list> -->
-          <!-- <app-menu-list-item *ngFor="let item of navItems" [item]="item"></app-menu-list-item> -->
-        <!-- </mat-nav-list>
-      </mat-sidenav> -->
+            <!-- <app-menu-list-item *ngFor="let item of navItems" [item]="item"></app-menu-list-item> -->
+            <!-- </mat-nav-list>
+        </mat-sidenav> -->
 
-      <!-- Content -->
-      <mat-sidenav-content role="main">
-        <div class="container-fluid p-5">
-          <!-- Router Outlet -->
-          <router-outlet #router="outlet"></router-outlet>
-        </div>
-      </mat-sidenav-content>
-    </mat-sidenav-container>
+            <!-- Content -->
+            <mat-sidenav-content role="main">
+                <div class="container-fluid p-5 h-100">
+                    <!-- Router Outlet -->
+                    <router-outlet #router="outlet"></router-outlet>
+                </div>
+            </mat-sidenav-content>
+        </mat-sidenav-container>
 
-    <!-- Footer -->
-    <!-- <app-footer></app-footer> -->
-  </div>
+        <!-- Footer -->
+        <!-- <app-footer></app-footer> -->
+    </div>
 </div>

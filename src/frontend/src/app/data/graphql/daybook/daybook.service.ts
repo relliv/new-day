@@ -7,7 +7,7 @@ import { gql } from 'apollo-angular';
 export class DaybookService {
   public createDaybook(title: string, description: any = null): any {
     return gql `mutation {
-      createDaybook(input: { title: "${title}", description: ${description}}) {
+      createDaybook(input: { title: "${title}", description: "${description}"}) {
         id
         title
         description
@@ -17,7 +17,7 @@ export class DaybookService {
 
   public getBooks(page: number = 1): any {
     return gql `query getDaybooks{
-      daybooks(first: 25){
+      daybooks(orderBy: [{ column: CREATED_AT, order: DESC }], first: 25){
         data{
           id
           title

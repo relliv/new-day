@@ -19,6 +19,13 @@ class Daybook extends Model
         'archive'
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::latest();
+    }
+
     public function dates(): HasMany
     {
         return $this->hasMany(DaybookDate::class);
