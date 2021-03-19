@@ -1,4 +1,4 @@
-import { IDaybookLog, IFirstDaybookDateLog } from '@data/models/daybook/daybook-log';
+import { IDaybookLog } from '@data/models/daybook/daybook-log';
 import { IDaybook } from '@data/models/daybook/daybook';
 
 export class DaybookDateRootObject {
@@ -6,15 +6,15 @@ export class DaybookDateRootObject {
   daybook: IDaybook
 }
 
-class DaybookDateData {
+export class DaybookDateData {
   whereDaybookDate: DaybookDate;
 }
 
 export class IDaybookDate {
-  id: string;
+  id: number;
   daybook_id: number;
   target_date: string;
-  logs: [ IDaybookLog | IFirstDaybookDateLog | any ];
+  logs: [ IDaybookLog | any ];
   log_count?: number;
   last_log: IDaybookLog;
   created_at: string;
@@ -22,10 +22,10 @@ export class IDaybookDate {
 }
 
 export class DaybookDate implements IDaybookDate {
-  id: string;
+  id: number;
   daybook_id: number;
   target_date: string;
-  logs: [ IDaybookLog | IFirstDaybookDateLog | any ];
+  logs: [ IDaybookLog | any ];
   log_count?: number;
   last_log: IDaybookLog;
   created_at: string;

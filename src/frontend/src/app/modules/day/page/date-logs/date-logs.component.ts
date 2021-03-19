@@ -7,8 +7,7 @@ import { BlurEvent, FocusEvent } from '@ckeditor/ckeditor5-angular/ckeditor.comp
 
 import { Subscription } from 'rxjs';
 import { Apollo, QueryRef } from 'apollo-angular';
-import { FirstDaybookDateLogData, IDaybookLog, IFirstDaybookDateLog } from '@data/models/daybook/daybook-log';
-import { DaybookDateRootObject, IDaybookDate, DaybookDate} from '@data/models/daybook/daybook-date';
+import { DaybookDateRootObject, DaybookDateData, IDaybookDate, DaybookDate} from '@data/models/daybook/daybook-date';
 import { DaybookLogService } from '@data/graphql/daybook/daybook-log.service';
 import { DaybookRootObject, IDaybook, Daybook } from '@data/models/daybook/daybook';
 import { DaybookService } from '@data/graphql/daybook/daybook.service';
@@ -23,7 +22,7 @@ export class DateLogsComponent implements OnInit {
 
   public daybook: IDaybook = new Daybook();
   public daybookDate: IDaybookDate = new DaybookDate();
-  public dateLogs: any;
+  public dateLogs: any[] = [];
 
   public selectedDate: any;
   public selectedBookId: any;
@@ -117,6 +116,21 @@ export class DateLogsComponent implements OnInit {
         }));
       }
 
+      if (!data.daybookDate){
+        this.apollo.mutate({
+          mutation: this.daybookLogService.createDaybookDate(this.daybook.id, this.selectedDate)
+        }).subscribe(({data}: DaybookDateData | any) => {
+          if (data.createDaybookDate){
+            this.daybookDate = data.createDaybookDate;
+
+            this.isLoading = false;
+            this.spinner.hide(`bookDateSpinner`);
+          } else{
+            // Todo: show message
+          }
+        });
+      }
+
       this.isLoading = loading;
       this.spinner.hide(`bookDateSpinner`);
     });
@@ -126,43 +140,24 @@ export class DateLogsComponent implements OnInit {
     this.isLoading = true;
     this.spinner.show(`bookDateSpinner`);
 
-    if (!this.daybookDate){
-      this.apollo.mutate({
-        mutation: this.daybookLogService.firstDaybookDateLog(this.daybook.id, this.selectedDate)
-      }).subscribe(({data}: FirstDaybookDateLogData | any) => {
-        if (data.firstDaybookDateLog){
-          this.daybookDate = data.firstDaybookDateLog.daybook_date;
+    console.log(this.daybookDate);
 
-          this.dateLogs = [data.firstDaybookDateLog].map((item) => ({
-            ...item,
-            isSaving: false,
-            isEditing: false
-          }));
-        } else{
-          // Todo: show message
-        }
+    this.apollo.mutate({
+      mutation: this.daybookLogService.createDaybookDateLog(this.daybook.id, this.daybookDate.id)
+    }).subscribe(({data}: any) => {
+      if (data.createDaybookDateLog){
+        let newLog = ({
+          ...data.createDaybookDateLog,
+          isSaving: false,
+          isEditing: false
+        });
 
-        this.isLoading = false;
-        this.spinner.hide(`bookDateSpinner`);
-      });
-    } else {
-      this.apollo.mutate({
-        mutation: this.daybookLogService.createDaybookDateLog(this.daybook.id, this.daybookDate.id)
-      }).subscribe(({data}: any) => {
-        if (data.createDaybookDateLog){
-          let newLog = ({
-            ...data.createDaybookDateLog,
-            isSaving: false,
-            isEditing: false
-          });
+        this.dateLogs.unshift(newLog);
+      }
 
-          this.dateLogs.unshift(newLog);
-        }
-
-        this.isLoading = false;
-        this.spinner.hide(`bookDateSpinner`);
-      });
-    }
+      this.isLoading = false;
+      this.spinner.hide(`bookDateSpinner`);
+    });
   }
 
   public updateLog(data: any, dateLog: any){

@@ -5,8 +5,9 @@ type DaybookLog {
     daybook_date_id: Int!
     title: String
     log: String
-    daybook_date: DaybookDate @hasOne(relation: "daybookDate")
+    daybook_date: DaybookDate @belongsTo(relation: "daybookDate")
     created_at_time: String!
+
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -18,6 +19,7 @@ type DaybookDate {
     logs: [DaybookLog] @hasMany
     last_log: DaybookLog @hasOne(relation: "lastLog")
     logs_count: Int! @count(relation: "logs")
+
     created_at: DateTime!
     updated_at: DateTime!
 }
@@ -29,9 +31,9 @@ extend type Query {
     ): DaybookDate @first(model: "Day\\Daybook\\DaybookDate")
 }
 
-type Mutation {
-    # First log with target date
-    firstDaybookDateLog(input: FirstDaybookLogInput! @spread): DaybookLog! @create(model: "Day\\Daybook\\DaybookLog")
+extend type Mutation {
+    # new date
+    createDaybookDate(input: DaybookDateInput @spread): DaybookDate! @create(model: "Day\\Daybook\\DaybookDate")
 
     # new log
     createDaybookDateLog(input: CreateDaybookLogInput @spread): DaybookLog! @create(model: "Day\\Daybook\\DaybookLog")
@@ -40,13 +42,10 @@ type Mutation {
     updateDaybookDateLog(input: UpdateDaybookLogInput @spread): DaybookLog! @update(model: "Day\\Daybook\\DaybookLog")
 }
 
-# Log inputs
-input FirstDaybookLogInput {
-    daybook_id: Int! @rules(apply: ["required"])
-    title: String
-    log: String
-    # daybook_date_id relation
-    daybook_date: CreateDaybookDateBelongsTo!
+# Date inputs
+input DaybookDateInput {
+    daybook_id: Int!
+    target_date: String
 }
 
 input CreateDaybookLogInput {
@@ -71,11 +70,4 @@ input CreateDaybookDateInput {
 input WhereDaybookDateInput {
     daybook_id: ID!
     target_date: Date!
-}
-
-input CreateDaybookDateBelongsTo {
-    connect: ID
-    upsert: CreateDaybookDateInput!
-#   update: UpdateUserInput
-#   upsert: UpsertUserInput
 }

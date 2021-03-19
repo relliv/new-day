@@ -22,7 +22,7 @@ extend type Query {
     daybook (id: ID! @eq): Daybook @find(model: "Day\\Daybook\\Daybook")
 }
 
-type Mutation {
+extend type Mutation {
     "Create new record"
     createDaybook(input: CreateDaybookInput! @spread): Daybook! @create(model: "Day\\Daybook\\Daybook")
 }

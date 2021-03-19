@@ -36,30 +36,19 @@ export class DaybookLogService {
     }`;
   }
 
-  public firstDaybookDateLog(daybookId: any, targetDate: any): any {
+  public createDaybookDate(daybookId: any, targetDate: any): any {
     return gql `mutation {
-      firstDaybookDateLog(
+      createDaybookDate(
         input: {
           daybook_id: ${daybookId},
-          title: "Untitled"
-          log: "",
-          daybook_date: { upsert: { daybook_id: ${daybookId}, target_date: "${targetDate}" } }
+          target_date: "${targetDate}"
         }
       ) {
         id
         daybook_id
-        daybook_date_id
-        title
-        log
+        target_date
         created_at
         updated_at
-        daybook_date{
-          id
-          daybook_id
-          target_date
-          created_at
-          updated_at
-        }
       }
     }`;
   }

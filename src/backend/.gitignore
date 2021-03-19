@@ -13,3 +13,8 @@ npm-debug.log
 yarn-error.log
 app/Console/Commands
 composer.lock
+
+# lighthouse ide helper
+_lighthouse_ide_helper.php
+programmatic-types.graphql
+schema-directives.graphql

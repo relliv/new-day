@@ -166,7 +166,8 @@ return [
          * Package Service Providers...
          */
         \Nuwave\Lighthouse\WhereConditions\WhereConditionsServiceProvider::class,
-        
+        \Nuwave\Lighthouse\Tracing\TracingServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
