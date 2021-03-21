@@ -164,18 +164,18 @@ export class DateLogsComponent implements OnInit {
     });
   }
 
-  public updateLog(data: any, dateLog: any){
-    if (data !== dateLog.log){
+  public updateLog(newLog: any, dateLog: any){
+    if (newLog !== dateLog.log){
       this.isLoading = false;
-
       dateLog.isSaving = true;
 
       this.apollo.mutate({
-        mutation: this.daybookLogService.updateDaybookDateLog(dateLog.id, dateLog.title, data)
-      }).subscribe(({_data}: any) => {
-        dateLog.log = data;
+        mutation: this.daybookLogService.updateDaybookDateLog(dateLog.id, dateLog.title, newLog)
+      }).subscribe(({data}: any) => {
+        console.log(data);
+
         dateLog.isSaving = false;
-        dateLog.updated_at = _data.updateDaybookDateLog.updated_at;
+        dateLog.updated_at = data.updateDaybookDateLog.updated_at;
 
         this.isLoading = false;
       });
@@ -191,9 +191,9 @@ export class DateLogsComponent implements OnInit {
   public onBlurEditor({ editor }: BlurEvent, dateLog: any) {
     this.currentDateLog = null;
 
-    const data = editor.getData();
+    const newLog = editor.getData();
 
-    this.updateLog(data, dateLog);
+    this.updateLog(newLog, dateLog);
   }
 
   public onFocusLogTitle(index: number, dateLog: any){
