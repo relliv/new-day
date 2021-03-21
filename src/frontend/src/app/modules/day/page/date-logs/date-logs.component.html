@@ -1,3 +1,4 @@
+<!-- Daybook Logs -->
 <div class="row h-100 position-relative">
   <div class="container-fluid">
     <ng-template #buttonText>
@@ -38,7 +39,10 @@
                       {{dateLog.updated_at | amTimeAgo}}
                     </small>
 
-                    <button class="btn btn-link p-0" placement="right" [ngbTooltip]="dateLog.history_count + ' history logs'">
+                    <button class="btn btn-link p-0" placement="right"
+                      [ngbTooltip]="dateLog.history_count + ' history logs'"
+                      (click)="showLogHistory(logHistory, dateLog)"
+                    >
                       <mat-icon svgIcon="history" class="mdi-18px mb-1" matListIcon></mat-icon>
                     </button>
                   </div>
@@ -92,3 +96,59 @@
     <ngx-spinner name="bookDateSpinner" bdColor="#444548cc" type="ball-triangle-path" size="medium"></ngx-spinner>
   </div>
 </div>
+
+<!-- History Modal -->
+<ng-template #logHistory let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      <mat-icon svgIcon="history" class="mr-1" matListIcon></mat-icon>
+      {{currentDateLog ? currentDateLog.title : '-'}}
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+      <ngb-panel *ngFor="let dateLog of currentDateLog.historyLogs; let i = index;">
+        <ng-template ngbPanelHeader let-opened="opened">
+          <div class="d-flex align-items-center justify-content-between">
+            <!-- Section Title -->
+            <div class="font-weight-bold m-0">
+              <!-- Last Update Date -->
+              <div>
+                <!-- Datetime Data Tooltip -->
+                <ng-template #datetimeData>
+                  Date: {{dateLog.created_at}}
+                </ng-template>
+              </div>
+
+              <!-- Log Title -->
+              <div class="ml-2">
+                <h4 *ngIf="!dateLog.isSaving" class="ml-2" placement="right" [ngbTooltip]="datetimeData">
+                  {{dateLog.updated_at | amTimeAgo}}
+                </h4>
+              </div>
+            </div>
+
+            <!-- Toggle -->
+            <button ngbPanelToggle class="btn btn-link p-0" placement="left" [ngbTooltip]="opened ? 'Hide' : 'Show'">
+              <mat-icon svgIcon="minus" matListIcon *ngIf="opened; else hidePanel;"></mat-icon>
+
+              <ng-template #hidePanel>
+                <mat-icon svgIcon="chevron-down" matListIcon></mat-icon>
+              </ng-template>
+            </button>
+          </div>
+        </ng-template>
+
+        <ng-template ngbPanelContent>
+          <ckeditor [editor]="editor"
+              [data]="dateLog.log"
+              [config]="editorConfig"
+              [disabled]="true"></ckeditor>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+</ng-template>

@@ -13,6 +13,14 @@ type DaybookLog {
     updated_at: DateTime!
 }
 
+type DaybookLogHistory {
+    id: ID!
+    daybook_log_id: Int!
+    log: String
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
 type DaybookDate {
     id: ID!
     daybook_id: Int!
@@ -30,6 +38,13 @@ extend type Query {
     daybookDate(
         where: _ @whereConditions(columns: ["daybook_id", "target_date"])
     ): DaybookDate @first(model: "Day\\Daybook\\DaybookDate")
+
+    # Log history
+    daybookLogHistory(
+        daybook_log_id: Int! @where(operator: "=")
+    ): [DaybookLogHistory!]!
+    @all(model: "Day\\Daybook\\DaybookLogHistory")
+    @orderBy(column: "created_at", direction: "DESC")
 }
 
 extend type Mutation {
@@ -64,11 +79,6 @@ input UpdateDaybookLogInput {
 
 # Date inputs
 input CreateDaybookDateInput {
-    daybook_id: ID!
-    target_date: Date!
-}
-
-input WhereDaybookDateInput {
     daybook_id: ID!
     target_date: Date!
 }

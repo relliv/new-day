@@ -18,6 +18,7 @@ extend type Query {
     daybooks (
         orderBy: _ @orderBy(columns: ["created_at", "title"])
     ): [Daybook] @paginate(type: PAGINATOR, defaultCount: 10, maxCount: 50, model: "Day\\Daybook\\Daybook")
+
     "Retrieve requested item"
     daybook (id: ID! @eq): Daybook @find(model: "Day\\Daybook\\Daybook")
 }
@@ -32,11 +33,4 @@ input CreateDaybookInput {
     description: String @rules(apply: ["nullable", "max:1000"])
     icon: String @rules(apply: ["max:50"])
     color: String @rules(apply: ["max:150"])
-}
-
-enum PostColumn {
-  # Another reason why you might want to have a custom enum is to
-  # correct typos or bad naming in column names.
-  POSTED_AT @enum(value: "postd_timestamp")
-  TITLE @enum(value: "title")
 }

@@ -26,7 +26,7 @@ class DaybookLog extends Model
 
     public function history(): HasMany
     {
-        return $this->hasMany(DaybookLogHistory::class);
+        return $this->hasMany(DaybookLogHistory::class)->orderBy('id', 'DESC');
     }
 
     // /**

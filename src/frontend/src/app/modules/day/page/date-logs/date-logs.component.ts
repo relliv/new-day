@@ -4,10 +4,12 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import moment from 'moment';
 import * as CKEditor from '@ckeditor/ckeditor5-build-balloon-block';
 import { BlurEvent, FocusEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Subscription } from 'rxjs';
 import { Apollo, QueryRef } from 'apollo-angular';
 import { DaybookDateRootObject, DaybookDateData, IDaybookDate, DaybookDate} from '@data/models/daybook/daybook-date';
+import { DaybookLogHistoryObject, IDaybookLogHistory, DaybookLogHistory} from '@data/models/daybook/daybook-history';
 import { DaybookLogService } from '@data/graphql/daybook/daybook-log.service';
 import { DaybookRootObject, IDaybook, Daybook } from '@data/models/daybook/daybook';
 import { DaybookService } from '@data/graphql/daybook/daybook.service';
@@ -34,6 +36,9 @@ export class DateLogsComponent implements OnInit {
   private daybookDateQuery: QueryRef < any > ;
   private daybookDateQuerySubscription: Subscription;
 
+  private logHistoryQuery: QueryRef < any > ;
+  private logHistoryQuerySubscription: Subscription;
+
   public editor = CKEditor;
   public editorConfig = {
     placeholder: 'Add some log...'
@@ -49,7 +54,7 @@ export class DateLogsComponent implements OnInit {
     private apollo: Apollo,
     private spinner: NgxSpinnerService,
     //private toastr: ToastrService,
-    //private modalService: NgbModal,
+    private modalService: NgbModal,
     private router: Router,
   ) {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -177,6 +182,8 @@ export class DateLogsComponent implements OnInit {
     }
   }
 
+  //#region Log Focus/Blur Events
+
   public onFocusEditor({ editor }: FocusEvent, dateLog: any){
     this.currentDateLog = dateLog;
   }
@@ -219,6 +226,25 @@ export class DateLogsComponent implements OnInit {
       dateLog.isEditing = false;
 
       this.isLoading = false;
+    });
+  }
+
+  //#endregion
+
+  public showLogHistory(modal: any, dateLog: any){
+    this.currentDateLog = dateLog;
+
+    this.logHistoryQuery = this.apollo.watchQuery < DaybookLogHistoryObject > ({
+      query: this.daybookLogService.getDaybookLogHistory(dateLog.id),
+      fetchPolicy: 'no-cache'
+    });
+
+    this.logHistoryQuerySubscription = this.logHistoryQuery
+    .valueChanges
+    .subscribe(({ data, loading }) => {
+      this.currentDateLog.historyLogs = data.daybookLogHistory;
+
+      this.modalService.open(modal, { size: 'xl', centered: true });
     });
   }
 }

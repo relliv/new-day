@@ -37,6 +37,18 @@ export class DaybookLogService {
     }`;
   }
 
+  public getDaybookLogHistory(daybookLogId: any): any {
+    return gql `query getDaybooks {
+      daybookLogHistory(daybook_log_id: ${daybookLogId}) {
+        id
+        daybook_log_id
+        log
+        created_at
+        updated_at
+      }
+    }`;
+  }
+
   public createDaybookDate(daybookId: any, targetDate: any): any {
     return gql `mutation {
       createDaybookDate(
