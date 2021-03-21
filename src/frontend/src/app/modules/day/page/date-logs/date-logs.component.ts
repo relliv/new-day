@@ -111,6 +111,7 @@ export class DateLogsComponent implements OnInit {
 
         this.dateLogs = data.daybookDate.logs.map((item: any) => ({
           ...item,
+          _title: item.title,
           isSaving: false,
           isEditing: false
         }));
@@ -139,8 +140,6 @@ export class DateLogsComponent implements OnInit {
   public addLog(){
     this.isLoading = true;
     this.spinner.show(`bookDateSpinner`);
-
-    console.log(this.daybookDate);
 
     this.apollo.mutate({
       mutation: this.daybookLogService.createDaybookDateLog(this.daybook.id, this.daybookDate.id)
@@ -199,7 +198,7 @@ export class DateLogsComponent implements OnInit {
   }
 
   public onBlurLogTitle(event: any, dateLog: any){
-    if (!dateLog.title || dateLog.title == event.target.value){
+    if (!dateLog.title || dateLog._title == event.target.value){
       dateLog.isSaving = false;
       dateLog.isEditing = false;
 
@@ -214,6 +213,8 @@ export class DateLogsComponent implements OnInit {
       mutation: this.daybookLogService.updateDaybookDateLog(dateLog.id, dateLog.title, dateLog.log)
     }).subscribe(({data}: any) => {
       dateLog.updated_at = data.updateDaybookDateLog.updated_at;
+      dateLog._title = event.target.value;
+
       dateLog.isSaving = false;
       dateLog.isEditing = false;
 

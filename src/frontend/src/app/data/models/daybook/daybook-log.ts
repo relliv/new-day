@@ -2,6 +2,8 @@ import { IDaybookDate } from '@data/models/daybook/daybook-date';
 
 export interface IDaybookLog {
   id: number;
+  _title: any;
+  title: any;
   log: string;
   created_at: string;
   updated_at: string;
@@ -12,6 +14,8 @@ export interface IDaybookLog {
 
 export class DaybookLog implements IDaybookLog {
   id: number;
+  _title: any;
+  title: any;
   log: string;
   created_at: string;
   updated_at: string;
