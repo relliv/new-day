@@ -26,10 +26,12 @@ class DaybookLogObserver
      */
     public function updated(DaybookLog $daybookLog)
     {
-        DaybookLogHistory::create([
-            'daybook_log_id' => $daybookLog->id,
-            'log' => $daybookLog->log
-        ]);
+        if($daybookLog->isDirty('log')){
+            DaybookLogHistory::create([
+                'daybook_log_id' => $daybookLog->id,
+                'log' => $daybookLog->log
+            ]);
+        }
     }
 
     /**
