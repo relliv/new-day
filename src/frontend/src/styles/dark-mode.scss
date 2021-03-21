@@ -1,0 +1,7 @@
+@import '/src/styles/variables/colors.scss';
+
+@media (prefers-color-scheme: dark){
+  .btn-link{
+    color: $theme-primary !important;
+  }
+}

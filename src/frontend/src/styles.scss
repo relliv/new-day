@@ -7,49 +7,57 @@
 /* Toastr Notifications */
 
 @import '~ngx-toastr/toastr';
+
+// Custom stylings
+@import 'styles/components/scrollbar.scss';
+@import 'styles/components/modal.scss';
+@import 'styles/components/card.scss';
+@import 'styles/dark-mode.scss';
+
 ngx-spinner .overlay {
-    background-color: #6880b5cc !important;
+  background-color: #6880b5cc !important;
 }
 
 @media (prefers-color-scheme: dark) {
-    ngx-spinner .overlay {
-        background-color: #444548cc !important;
-    }
+  ngx-spinner .overlay {
+    background-color: #444548cc !important;
+  }
 }
 
 .modal {
-    .modal-content {
-        border-radius: 20px;
-    }
+  .modal-content {
+    border-radius: 20px;
+  }
 }
 
 .modal-backdrop.fade {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 
 .modal-open .modal {
-    opacity: 1;
+  opacity: 1;
 }
 
 .accordion {
-    .card {
-        overflow: hidden;
-        border-radius: 35px !important;
-        box-shadow: 0px 14px 80px rgba(14, 15, 18, 0.1);
-        margin-bottom: 35px;
-        .card-header {
-            background-color: #fff;
-            padding: 20px;
-        }
+  .card {
+    overflow: hidden;
+    border-radius: 35px !important;
+    box-shadow: 0px 14px 80px rgba(14, 15, 18, 0.1);
+    margin-bottom: 35px;
+
+    .card-header {
+      background-color: #fff;
+      padding: 20px;
     }
+  }
 }
 
 .ck-editor__editable_inline {
-    max-height: 500px;
-    line-height: 20px;
+  max-height: 500px;
+  line-height: 20px;
 }
 
-.mdi-18px{
+.mdi-18px {
   height: 18px !important;
   width: 18px !important;
 }
