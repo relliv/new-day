@@ -38,8 +38,8 @@
                       {{dateLog.updated_at | amTimeAgo}}
                     </small>
 
-                    <button class="btn btn-link p-0">
-                      <mat-icon svgIcon="history" matListIcon></mat-icon>
+                    <button class="btn btn-link p-0" placement="right" [ngbTooltip]="dateLog.history_count + ' history logs'">
+                      <mat-icon svgIcon="history" class="mdi-18px mb-1" matListIcon></mat-icon>
                     </button>
                   </div>
 

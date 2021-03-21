@@ -27,6 +27,7 @@ export class DaybookLogService {
           id
           title
           log
+          history_count
           created_at
           updated_at
         }

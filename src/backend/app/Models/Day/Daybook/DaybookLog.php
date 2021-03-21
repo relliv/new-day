@@ -4,6 +4,7 @@ namespace App\Models\Day\Daybook;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class DaybookLog extends Model
 {
@@ -21,6 +22,11 @@ class DaybookLog extends Model
     public function daybookDate(): BelongsTo
     {
         return $this->belongsTo(DaybookDate::class);
+    }
+
+    public function history(): HasMany
+    {
+        return $this->hasMany(DaybookLogHistory::class);
     }
 
     // /**

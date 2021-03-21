@@ -5,6 +5,8 @@ export interface IDaybookLog {
   _title: any;
   title: any;
   log: string;
+  history_count: number;
+
   created_at: string;
   updated_at: string;
 
@@ -17,6 +19,8 @@ export class DaybookLog implements IDaybookLog {
   _title: any;
   title: any;
   log: string;
+  history_count: number;
+
   created_at: string;
   updated_at: string;
 

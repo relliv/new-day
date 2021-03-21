@@ -6,6 +6,7 @@ type DaybookLog {
     title: String
     log: String
     daybook_date: DaybookDate @belongsTo(relation: "daybookDate")
+    history_count: Int! @count(relation: "history")
     created_at_time: String!
 
     created_at: DateTime!
