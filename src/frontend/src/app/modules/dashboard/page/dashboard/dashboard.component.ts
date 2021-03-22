@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, NgZone, ChangeDetectorRef, ViewRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, NgZone, ChangeDetectorRef, ViewRef, ViewChild, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -16,7 +16,7 @@ import { NavigationStart, Router } from '@angular/router';
   styleUrls: ['./dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   @ViewChild('addDaybookModal') addDaybookModalRef: any;
 
   //#region Daybooks
@@ -53,14 +53,8 @@ export class DashboardComponent implements OnInit {
   ) {
     this.daybooksQuery = this.apollo.watchQuery < DaybooksRootObject > ({
       query: this.daybookService.getBooks(),
-      //pollInterval: 1000
+      fetchPolicy: 'no-cache'
     });
-
-    this.router.events.subscribe((event: NavigationStart) => {
-      if (event.navigationTrigger === 'popstate') {
-        this.daybooksQuery.refetch();
-      }
-    }).unsubscribe();
   }
 
   ngOnInit(): void {
@@ -99,25 +93,6 @@ export class DashboardComponent implements OnInit {
 
     this.apollo.mutate({
       mutation: this.daybookService.createDaybook(this.newDaybookForm.value.title, this.newDaybookForm.value.description),
-      update: (proxy, data: any ) => {
-        // Read the data from our cache for this query.
-        const _data: any = proxy.readQuery({ query: this.daybookService.getBooks() });
-
-        // If you are using the Query service (TodoAppGQL) instead of defining your GQL as a constant, you can reference the query as:
-        // const data = proxy.readQuery({ query: this.todoAppGQL.document });
-
-        console.log(_data.daybooks.data, data.createDaybook);
-        // Add our todo from the mutation to the end.
-        _data.daybooks.data.push(data);
-
-        // Write our data back to the cache.
-        proxy.writeQuery({ query: this.daybookService.getBooks(), data });
-
-        // alternatively when using Query service:
-        // proxy.writeQuery({ query: this.todoAppGQL.document, data });
-
-        this.newDaybookAdding = false;
-      }
     }).subscribe();
   }
 

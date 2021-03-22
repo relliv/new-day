@@ -66,13 +66,13 @@ export class DaybookLogService {
     }`;
   }
 
-  public updateDaybookDateLog(id: any, title: any, log: any): any {
-    return gql `mutation {
+  public updateDaybookDateLog(): any {
+    return gql `mutation updateDaybookDateLog($id: ID!, $title: String, $log: String){
       updateDaybookDateLog(
         input: {
-          id: ${id},
-          title: "${title}"
-          log: "${log}"
+          id: $id,
+          title: $title
+          log: $log
         }
       ) {
         updated_at

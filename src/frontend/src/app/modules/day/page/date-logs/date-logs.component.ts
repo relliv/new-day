@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap, NavigationStart } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import moment from 'moment';
@@ -19,7 +19,7 @@ import { DaybookService } from '@data/graphql/daybook/daybook.service';
   templateUrl: './date-logs.component.html',
   styleUrls: ['./date-logs.component.scss']
 })
-export class DateLogsComponent implements OnInit {
+export class DateLogsComponent implements OnInit, OnDestroy {
   @ViewChildren('editTitleInput') editTitleInputs: QueryList<ElementRef>;
 
   public daybook: IDaybook = new Daybook();
@@ -131,7 +131,6 @@ export class DateLogsComponent implements OnInit {
     this.isLoading = true;
     this.spinner.show(`bookDateSpinner`);
 
-    console.log(this.daybookDate);
     if (!this.daybookDate || this.daybookDate.id === undefined){
       this.apollo.mutate({
         mutation: this.daybookLogService.createDaybookDate(this.daybook.id, this.selectedDate),
@@ -190,10 +189,14 @@ export class DateLogsComponent implements OnInit {
       dateLog.isSaving = true;
 
       this.apollo.mutate({
-        mutation: this.daybookLogService.updateDaybookDateLog(dateLog.id, dateLog.title, newLog)
+        mutation: this.daybookLogService.updateDaybookDateLog(),
+        variables: {
+          id: dateLog.id,
+          title: dateLog.title,
+          log: newLog
+        }
       }).subscribe(({data}: any) => {
-        console.log(data);
-
+        dateLog.history_count += 1;
         dateLog.isSaving = false;
         dateLog.updated_at = data.updateDaybookDateLog.updated_at;
 
@@ -266,5 +269,9 @@ export class DateLogsComponent implements OnInit {
 
       this.modalService.open(modal, { size: 'xl', centered: true });
     });
+  }
+
+  ngOnDestroy() {
+    this.daybookDateQuery.refetch();
   }
 }
