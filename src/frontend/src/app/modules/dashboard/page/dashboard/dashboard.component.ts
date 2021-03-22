@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
       if (event.navigationTrigger === 'popstate') {
         this.daybooksQuery.refetch();
       }
-    });
+    }).unsubscribe();
   }
 
   ngOnInit(): void {

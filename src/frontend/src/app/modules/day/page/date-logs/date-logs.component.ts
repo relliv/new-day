@@ -75,13 +75,6 @@ export class DateLogsComponent implements OnInit {
     });
 
     this.isToday = moment().diff(this.selectedDate, 'days');
-
-    this.router.events.subscribe((event: NavigationStart) => {
-      if (event.navigationTrigger === 'popstate') {
-        this.daybookQuery.refetch();
-        this.daybookDateQuery.refetch();
-      }
-    });
   }
 
   ngOnInit(): void {
@@ -118,30 +111,15 @@ export class DateLogsComponent implements OnInit {
         this.daybook = data.daybook;
       }
 
-      if (data.daybookDate && data.daybookDate.logs.length){
-        this.daybookDate = data.daybookDate;
+      this.daybookDate = data.daybookDate;
 
+      if (data.daybookDate && data.daybookDate.logs.length){
         this.dateLogs = data.daybookDate.logs.map((item: any) => ({
           ...item,
           _title: item.title,
           isSaving: false,
           isEditing: false
         }));
-      }
-
-      if (!data.daybookDate){
-        this.apollo.mutate({
-          mutation: this.daybookLogService.createDaybookDate(this.daybook.id, this.selectedDate)
-        }).subscribe(({data}: DaybookDateData | any) => {
-          if (data.createDaybookDate){
-            this.daybookDate = data.createDaybookDate;
-
-            this.isLoading = false;
-            this.spinner.hide(`bookDateSpinner`);
-          } else{
-            // Todo: show message
-          }
-        });
       }
 
       this.isLoading = loading;
@@ -153,8 +131,43 @@ export class DateLogsComponent implements OnInit {
     this.isLoading = true;
     this.spinner.show(`bookDateSpinner`);
 
+    console.log(this.daybookDate);
+    if (!this.daybookDate || this.daybookDate.id === undefined){
+      this.apollo.mutate({
+        mutation: this.daybookLogService.createDaybookDate(this.daybook.id, this.selectedDate),
+        refetchQueries: [
+          {
+            query: this.daybookService.getBook(this.daybook.id)
+          }
+        ]
+      }).subscribe(({data}: DaybookDateData | any) => {
+        if (data.createDaybookDate){
+          this.daybookDate = data.createDaybookDate;
+
+          this.isLoading = false;
+          this.spinner.hide(`bookDateSpinner`);
+
+          this.createLog();
+        } else{
+          // Todo: show message
+        }
+      });
+    } else {
+      this.createLog();
+    }
+  }
+
+  public createLog(){
+    this.isLoading = true;
+    this.spinner.show(`bookDateSpinner`);
+
     this.apollo.mutate({
-      mutation: this.daybookLogService.createDaybookDateLog(this.daybook.id, this.daybookDate.id)
+      mutation: this.daybookLogService.createDaybookDateLog(this.daybook.id, this.daybookDate.id),
+      refetchQueries: [
+        {
+          query: this.daybookLogService.getDaybookDate(this.selectedBookId, this.selectedDate)
+        }
+      ]
     }).subscribe(({data}: any) => {
       if (data.createDaybookDateLog){
         let newLog = ({

@@ -22,6 +22,8 @@ import { NavComponent } from '@layout/nav/nav.component';
 import { MatIconRegistry, MatIconModule } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
+import { defaultTimeZone, currentTimeZone } from '@data/models/common/preferences.ts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,8 +61,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class AppModule {
   constructor(matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
     // timezone list: https://gist.github.com/diogocapela/12c6617fc87607d11fd62d2a4f42b02a
-    moment.tz.setDefault('UTC');
-    moment.tz.zone('Europe/Istanbul');
+    // moment.tz.setDefault(defaultTimeZone);
+    // moment.tz.setDefault(currentTimeZone);
 
     moment.locale('en-us');
 

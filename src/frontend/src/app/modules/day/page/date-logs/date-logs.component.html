@@ -10,7 +10,7 @@
       [itemRoute]="['/day/book/', daybook.id]"
       [itemTitle]="daybook.title"
       [topTitle]="'Last Update: ' + (daybookDate && dateLogs && dateLogs.length ?
-        (dateLogs[0].updated_at | amTimeAgo) : 'Not logged yet')"
+        (dateLogs[0].updated_at | amFromUtc | amLocal | amTimeAgo) : 'Not logged yet')"
       [mainTitle]="(selectedDate | amDateFormat:'D MMMM YYYY') +(isToday === 0 ? ' (Today)' : '')"
       [buttonText]="buttonText" (buttonClick)="addLog()"
       *ngIf="!isLoading"></app-item-card>
@@ -36,7 +36,7 @@
 
                     <!-- Datetime Data -->
                     <small *ngIf="!dateLog.isSaving" class="ml-2" placement="right" [ngbTooltip]="datetimeData">
-                      {{dateLog.updated_at | amTimeAgo}}
+                      {{dateLog.updated_at | amFromUtc | amLocal | amTimeAgo}}
                     </small>
 
                     <button class="btn btn-link p-0" placement="right"
@@ -126,7 +126,7 @@
               <!-- Log Title -->
               <div class="ml-2">
                 <h4 *ngIf="!dateLog.isSaving" class="ml-2" placement="right" [ngbTooltip]="datetimeData">
-                  {{dateLog.updated_at | amTimeAgo}}
+                  {{dateLog.updated_at | amFromUtc | amLocal | amTimeAgo}}
                 </h4>
               </div>
             </div>

@@ -42,7 +42,10 @@
             </ng-template>
 
             <!-- Day Button -->
-            <button [ngClass]="'day filled-'+(day.isToday ? 'today-' : '')+(day.filledColorNumber ? day.filledColorNumber : '0')" (click)="openDayLog(day)" placement="bottom" [ngbTooltip]="dayTooltip">
+            <button [ngClass]="'day filled-'+(day.isToday ? 'today-' : '')+(day.filledColorNumber ? day.filledColorNumber : '0')"
+              (click)="openDayLog(day)"
+              placement="bottom"
+              [ngbTooltip]="dayTooltip">
         {{day.number}}
       </button>
         </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationStart, ParamMap, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -12,7 +12,7 @@ import { DaybookService } from '@data/graphql/daybook/daybook.service';
   templateUrl: './day-book.component.html',
   styleUrls: ['./day-book.component.scss']
 })
-export class DayBookComponent implements OnInit {
+export class DayBookComponent implements OnInit, OnDestroy {
   //#region Daybooks
 
   private daybookQuery: QueryRef < any > ;
@@ -45,12 +45,6 @@ export class DayBookComponent implements OnInit {
         });
       } else {
         // Tood: nofity about missing some things
-      }
-    });
-
-    this.router.events.subscribe((event: NavigationStart) => {
-      if (event.navigationTrigger === 'popstate') {
-        this.daybookQuery.refetch();
       }
     });
   }

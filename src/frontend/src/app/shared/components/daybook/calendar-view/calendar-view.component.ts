@@ -54,15 +54,15 @@ export class CalendarViewComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private modalService: NgbModal,
     private router: Router,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     var now = moment(),
-      day = now.format('D'),
-      month = now.format('M'),
-      monthDaysCount = moment(this.monthNumber, 'M').daysInMonth();
+      monthDaysCount = moment(`${this.currentYear}-${this.monthNumber}`, 'Y-M').daysInMonth();
 
-    for (var i = 1; i < monthDaysCount + 1; i++){
+    var daysOfMonth = Array.from({length: monthDaysCount}, (x, i) => i + 1);
+
+    this.days = daysOfMonth.map((i) => {
       let date = moment(`${this.currentYear}-${this.monthNumber}-${i}`),
         filledColorNumber: any,
         daybookDate;
@@ -75,7 +75,7 @@ export class CalendarViewComponent implements OnInit {
         }
       }
 
-      this.days.push({
+      return {
         number: i,
         isToday: date.format('YYYY-MM-DD') === now.format('YYYY-MM-DD') ? true : false,
         filledColorNumber: filledColorNumber ? filledColorNumber : false,
@@ -84,8 +84,8 @@ export class CalendarViewComponent implements OnInit {
         year: this.currentYear,
         daybookDate: daybookDate,
         isLoading: false
-      });
-    }
+      };
+    });
 
     this.monthName = moment(this.monthNumber, 'M').format('MMMM');
   }
