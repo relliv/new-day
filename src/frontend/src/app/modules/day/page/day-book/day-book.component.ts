@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, NavigationStart, ParamMap, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 import { Subscription } from 'rxjs';
@@ -32,6 +32,7 @@ export class DayBookComponent implements OnInit {
     private daybookService: DaybookService,
     private apollo: Apollo,
     private spinner: NgxSpinnerService,
+    private router: Router
   ) {
     this.route.paramMap.subscribe((params: ParamMap) => {
       let daybookId = params.get('id');
@@ -44,6 +45,12 @@ export class DayBookComponent implements OnInit {
         });
       } else {
         // Tood: nofity about missing some things
+      }
+    });
+
+    this.router.events.subscribe((event: NavigationStart) => {
+      if (event.navigationTrigger === 'popstate') {
+        this.daybookQuery.refetch();
       }
     });
   }

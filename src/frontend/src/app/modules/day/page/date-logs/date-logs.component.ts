@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap, NavigationStart } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import moment from 'moment';
 import * as CKEditor from '@ckeditor/ckeditor5-build-balloon-block';
@@ -55,7 +55,7 @@ export class DateLogsComponent implements OnInit {
     private spinner: NgxSpinnerService,
     //private toastr: ToastrService,
     private modalService: NgbModal,
-    private router: Router,
+    private router: Router
   ) {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.selectedBookId = params.get('id'),
@@ -75,6 +75,13 @@ export class DateLogsComponent implements OnInit {
     });
 
     this.isToday = moment().diff(this.selectedDate, 'days');
+
+    this.router.events.subscribe((event: NavigationStart) => {
+      if (event.navigationTrigger === 'popstate') {
+        this.daybookQuery.refetch();
+        this.daybookDateQuery.refetch();
+      }
+    });
   }
 
   ngOnInit(): void {

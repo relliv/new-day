@@ -8,6 +8,7 @@ import { Apollo, QueryRef } from 'apollo-angular';
 import { DaybookService } from '@data/graphql/daybook/daybook.service';
 import { DaybooksRootObject, Daybooks } from '@data/models/daybook/daybook';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -47,10 +48,18 @@ export class DashboardComponent implements OnInit {
     private toastr: ToastrService,
     private spinner: NgxSpinnerService,
     private apollo: Apollo,
-    private daybookService: DaybookService
+    private daybookService: DaybookService,
+    private router: Router
   ) {
     this.daybooksQuery = this.apollo.watchQuery < DaybooksRootObject > ({
-      query: this.daybookService.getBooks()
+      query: this.daybookService.getBooks(),
+      //pollInterval: 1000
+    });
+
+    this.router.events.subscribe((event: NavigationStart) => {
+      if (event.navigationTrigger === 'popstate') {
+        this.daybooksQuery.refetch();
+      }
     });
   }
 
