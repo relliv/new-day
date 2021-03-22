@@ -1,20 +1,25 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item active" aria-current="page">Home</li>
+    <li class="breadcrumb-item active" aria-current="page">
+      <a [routerLink]="['/dashboard']">
+        Dashboard
+      </a>
+    </li>
   </ol>
 </nav>
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Library</li>
-  </ol>
-</nav>
+    <li *ngFor="let item of breadcrumbItems" class="breadcrumb-item">
+      <ng-template #activeCrumb>
+        <span class="font-weight-bold">
+          {{item.title}}
+        </span>
+      </ng-template>
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Library</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Data</li>
+      <a *ngIf="!item.isActive; else activeCrumb" [routerLink]="[item.url]">
+        {{item.title}}
+      </a>
+    </li>
   </ol>
 </nav>

@@ -23,12 +23,14 @@ import { MatIconRegistry, MatIconModule } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { defaultTimeZone, currentTimeZone } from '@data/models/common/preferences.ts';
+import { BreadcrumbComponent } from '@shared/components/common/breadcrumb/breadcrumb.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ContentLayoutComponent,
-    NavComponent
+    NavComponent,
+    BreadcrumbComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +52,7 @@ import { defaultTimeZone, currentTimeZone } from '@data/models/common/preference
     //MatIconModule,
   ],
   exports:[
-
+    BreadcrumbComponent
   ],
   providers: [
     AuthGuard
