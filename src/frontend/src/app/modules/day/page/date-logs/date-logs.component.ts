@@ -240,7 +240,8 @@ export class DateLogsComponent implements OnInit, OnDestroy {
     this.isLoading = false;
 
     this.apollo.mutate({
-      mutation: this.daybookLogService.updateDaybookDateLog(dateLog.id, dateLog.title, dateLog.log)
+      //mutation: this.daybookLogService.updateDaybookDateLog(dateLog.id, dateLog.title, dateLog.log)
+      mutation: this.daybookLogService.updateDaybookDateLog()
     }).subscribe(({data}: any) => {
       dateLog.updated_at = data.updateDaybookDateLog.updated_at;
       dateLog._title = event.target.value;

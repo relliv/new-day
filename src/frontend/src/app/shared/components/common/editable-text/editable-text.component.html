@@ -1,0 +1,10 @@
+<div (click)="onFocused($event)" *ngIf="!isEditing">
+  <ng-container *ngTemplateOutlet="textContent || 'Text Content'"></ng-container>
+</div>
+
+<input #replaceInput type="search" class="form-control"
+  [(ngModel)]="text"
+  [disabled]="inputDisabled"
+  (blur)="onBlured($event)"
+  (keydown.enter)="onBlured($event)"
+  *ngIf="isEditing">

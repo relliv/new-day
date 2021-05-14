@@ -11,12 +11,14 @@ import { BreadcrumbComponent } from '@shared/components/common/breadcrumb/breadc
 import { LiveDatetimeComponent } from '@shared/components/common/live-datetime/live-datetime.component';
 import { MatIconModule } from '@angular/material/icon';
 import { NewButtonComponent } from './components/common/new-button/new-button.component';
+import { EditableTextComponent } from './components/common/editable-text/editable-text.component';
 
 @NgModule({
   declarations: [
     DaybookCardComponent,
     LiveDatetimeComponent,
-    NewButtonComponent
+    NewButtonComponent,
+    EditableTextComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +43,8 @@ import { NewButtonComponent } from './components/common/new-button/new-button.co
     // custom components
     DaybookCardComponent,
     LiveDatetimeComponent,
-    NewButtonComponent
+    NewButtonComponent,
+    EditableTextComponent
   ]
 })
 export class SharedModule {}

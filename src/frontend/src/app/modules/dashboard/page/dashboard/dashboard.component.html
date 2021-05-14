@@ -1,3 +1,17 @@
+<div class="row">
+  <div class="container">
+    <ng-template #textContent>
+      <h1>
+        Text text text
+      </h1>
+    </ng-template>
+
+    <app-editable-text [textContent]="textContent"
+      text="text content goes here"
+      (onFocus)="onClickText()"></app-editable-text>
+  </div>
+</div>
+
 <!-- Add Item Modal -->
 <ng-template #addDaybookModal let-modal>
     <div class="modal-header">

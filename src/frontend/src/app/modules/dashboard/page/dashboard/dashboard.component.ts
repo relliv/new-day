@@ -61,6 +61,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.loadDaybooks();
   }
 
+  public onClickText(){
+    //alert('i am here');
+  }
+
   public loadDaybooks(){
     this.daybooksLoading = true;
     this.spinner.show(`dataSpinner`);
