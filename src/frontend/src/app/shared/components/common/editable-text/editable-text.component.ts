@@ -36,19 +36,25 @@ export class EditableTextComponent implements OnInit {
     setTimeout(() => {
       this.replaceInput.toArray()[0].nativeElement.focus();
 
-      this.onFocus.emit();
+      this.onFocus.emit({
+        event: event
+      });
     }, 250);
   }
 
   public onBlured(event: any) {
-    if (!this.previousText || this.text === event.target.value) {
-      this.isEditing = false;
+    console.clear();
 
+    this.isEditing = false;
+
+    let targetValue = event.target.value;
+
+    if (this.previousText === targetValue) {
       return;
     }
 
-    this.previousText = event.target.value;
-    this.onBlur.emit();
+    this.previousText = targetValue;
+    this.onBlur.emit({data: targetValue});
   }
 
   ngOnInit(): void {}

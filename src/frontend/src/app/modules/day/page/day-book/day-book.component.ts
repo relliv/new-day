@@ -67,12 +67,7 @@ export class DayBookComponent implements OnInit, OnDestroy {
     this.selectedDay = day;
   }
 
-  public onFocusDaybookTitle(index: number, dateLog: any){
-    dateLog.isEditing = true;
-
-    // setTimeout(() => {
-    //   this.editTitleInputs.toArray()[0].nativeElement.focus();
-    // }, 250);
+  public onFocusDaybookTitle(event: any){
   }
 
   ngOnDestroy() {
