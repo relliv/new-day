@@ -77,8 +77,7 @@ export class DaybookLogService {
       ) {
         updated_at
       }
-    }
-    `;
+    }`;
   }
 
   public createDaybookDateLog(daybookId: any, daybookDateId: any): any {

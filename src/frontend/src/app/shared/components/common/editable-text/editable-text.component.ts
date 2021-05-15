@@ -43,8 +43,6 @@ export class EditableTextComponent implements OnInit {
   }
 
   public onBlured(event: any) {
-    console.clear();
-
     this.isEditing = false;
 
     let targetValue = event.target.value;
@@ -54,7 +52,12 @@ export class EditableTextComponent implements OnInit {
     }
 
     this.previousText = targetValue;
-    this.onBlur.emit({data: targetValue});
+    this.text = targetValue;
+
+    this.onBlur.emit({
+      value: targetValue,
+      isEditing: this.isEditing
+    });
   }
 
   ngOnInit(): void {}

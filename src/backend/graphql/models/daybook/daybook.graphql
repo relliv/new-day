@@ -24,13 +24,24 @@ extend type Query {
 }
 
 extend type Mutation {
-    "Create new record"
+    # new book
     createDaybook(input: CreateDaybookInput! @spread): Daybook! @create(model: "Day\\Daybook\\Daybook")
+
+    # update book
+    updateDaybook(input: UpdateDaybookInput! @spread): Daybook! @update(model: "Day\\Daybook\\Daybook")
 }
 
 input CreateDaybookInput {
     title: String @rules(apply: ["required", "min:2", "max:100"])
     description: String @rules(apply: ["nullable", "max:1000"])
     icon: String @rules(apply: ["max:50"])
-    color: String @rules(apply: ["max:150"])
+    color: String @rules(apply: ["max:10"])
+}
+
+input UpdateDaybookInput {
+    id: ID!
+    title: String @rules(apply: ["required", "min:2", "max:100"])
+    description: String @rules(apply: ["nullable", "max:1000"])
+    icon: String @rules(apply: ["max:50"])
+    color: String @rules(apply: ["max:10"])
 }

@@ -17,7 +17,7 @@ export class DayBookComponent implements OnInit, OnDestroy {
 
   private daybookQuery: QueryRef < any > ;
   private daybookQuerySubscription: Subscription;
-  public daybook: IDaybook = new Daybook();
+  public daybook: Daybook = new Daybook();
   public daybookLoading: boolean = true;
 
   //#endregion
@@ -41,7 +41,8 @@ export class DayBookComponent implements OnInit, OnDestroy {
         this.daybookId = daybookId;
 
         this.daybookQuery = this.apollo.watchQuery < DaybookRootObject > ({
-          query: this.daybookService.getBook(daybookId)
+          query: this.daybookService.getBook(daybookId),
+          fetchPolicy: 'no-cache'
         });
       } else {
         // Tood: nofity about missing some things
@@ -52,13 +53,14 @@ export class DayBookComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.spinner.show('monthsLoading');
 
+    this.loadDaybook();
+  }
+
+  public loadDaybook(){
     this.daybookQuerySubscription = this.daybookQuery
     .valueChanges
-    .subscribe(({
-      data,
-      loading
-    }) => {
-      this.daybook = data.daybook;
+    .subscribe(({data, loading}: DaybookRootObject) => {
+      this.daybook = ({...data.daybook});
       this.daybookLoading = loading;
     });
   }
@@ -67,7 +69,16 @@ export class DayBookComponent implements OnInit, OnDestroy {
     this.selectedDay = day;
   }
 
-  public onFocusDaybookTitle(event: any){
+  public onBlurDaybookTitle(event: any, daybook: any){
+    this.apollo.mutate({
+      mutation: this.daybookService.updateDaybook(),
+      variables: {
+        id: daybook.id,
+        title: event.value
+      }
+    }).subscribe(() => {
+      this.daybook.title = event.value;
+    });
   }
 
   ngOnDestroy() {

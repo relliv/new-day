@@ -15,6 +15,28 @@ export class DaybookService {
     }`;
   }
 
+  public updateDaybook(): any {
+    return gql `mutation updateDaybook(
+      $id: ID!
+      $title: String
+      $description: String
+      $icon: String
+      $color: String
+    ) {
+      updateDaybook(
+        input: {
+          id: $id
+          title: $title
+          description: $description
+          icon: $icon
+          color: $color
+        }
+      ) {
+        updated_at
+      }
+    }`;
+  }
+
   public getBooks(page: number = 1): any {
     return gql `query getDaybooks{
       daybooks(orderBy: [{ column: CREATED_AT, order: DESC }], first: 25){

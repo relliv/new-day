@@ -23,10 +23,11 @@ export class Daybooks {
 
 export class DaybookRootObject {
   data: DaybookData;
+  loading: boolean;
 }
 
 class DaybookData {
-  daybooks: Daybooks;
+  daybook: Daybook;
 }
 
 //#endregion
