@@ -1,0 +1,15 @@
+:host {
+  .mat-icon {
+    transform: scale(.8);
+  }
+
+  .breadcrumb {
+    .breadcrumb-item+.breadcrumb-item{
+      padding-left: 0px;
+
+      &::before {
+        content: "";
+      }
+    }
+  }
+}

@@ -22,26 +22,63 @@ export class BreadcrumbService {
       return breadcrumbs;
     }
 
-    console.log(children);
     for (const child of children) {
+      console.log(child.snapshot.data);
+      console.log(child.url, currentRoute);
+
       const routeURL: string = child.snapshot.url.map(segment => segment.path).join('/');
 
       if (routeURL !== '') {
         url += `/${routeURL}`;
       }
 
-      const isActive = url === currentRoute;
-
-      if (child.snapshot.data && child.snapshot.data.breadcrumb){
-        const title = child.snapshot.data.breadcrumb.title;
-
-        console.log(title);
-        if (title !== undefined && title && !breadcrumbs.some(crumb => crumb.title === title)) {
-          breadcrumbs.push({title, url, isActive});
-        }
+      if (child.snapshot.data.breadcrumbs){
+        breadcrumbs = child.snapshot.data.breadcrumbs.map(function(breadcrumb){
+          //console.log(url, currentRoute, child.snapshot.url.join('/'));
+          console.log(child.snapshot.url.map(segment => segment.path).join('/'));
+          return Object.assign(breadcrumb, {
+            isActive: child.snapshot.url.join('/') === currentRoute
+          });
+        });
       }
 
       return this.createBreadcrumbs(child, currentRoute, url, breadcrumbs);
     }
+
+      // if (child.snapshot.data){
+      //   const routeURL: string = child.snapshot.url.map(segment => segment.path).join('/');
+
+      //   if (routeURL !== '') {
+      //     url += `/${routeURL}`;
+      //   }
+
+      //   console.log(routeURL.indexOf(`/${child.snapshot.data.rootPath}`));
+      //   if (routeURL.indexOf(`/${child.snapshot.data.rootPath}`) !== -1){
+      //     url += `/${child.snapshot.data.rootPath}`;
+      //   }
+
+      //   const isActive = url === currentRoute;
+
+      //   if (child.snapshot.data.breadcrumb){
+      //     const title = child.snapshot.data.breadcrumb.title;
+
+      //     if (!breadcrumbs.some(crumb => crumb.title == title)) {
+      //       breadcrumbs.push({title, url, isActive});
+      //     }
+      //   }
+
+      //   if (child.snapshot.data.rootPath){
+      //     const title = child.snapshot.data.rootTitle;
+
+      //     if (!breadcrumbs.some(crumb => crumb.url == url)) {
+      //       console.log(url);
+      //       breadcrumbs.push({title, url, isActive});
+      //     }
+      //   }
+      // }
+
+
+
+    return breadcrumbs;
   }
 }

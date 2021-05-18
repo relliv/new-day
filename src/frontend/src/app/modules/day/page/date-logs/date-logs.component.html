@@ -3,11 +3,10 @@
   <div class="container-fluid">
     <ng-template #buttonText>
       Add New Log
-      <mat-icon #hidePanel svgIcon="plus" matListIcon></mat-icon>
+      <mat-icon svgIcon="plus" matListIcon></mat-icon>
     </ng-template>
 
     <app-item-card
-      [itemRoute]="['/day/book/', daybook.id]"
       [itemTitle]="daybook.title"
       [topTitle]="'Last Update: ' + (daybookDate && dateLogs && dateLogs.length ?
         (dateLogs[0].updated_at | amFromUtc | amLocal | amTimeAgo) : 'Not logged yet')"

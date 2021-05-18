@@ -8,12 +8,14 @@ import { CalendarViewComponent } from '@shared/components/daybook/calendar-view/
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { DateLogsComponent } from './page/date-logs/date-logs.component';
 import { ItemCardComponent } from '@shared/components/common/item-card/item-card.component';
+import { DaybooksComponent } from './page/daybooks/daybooks.component';
 
 @NgModule({
   declarations: [
     DayBookComponent,
     CalendarViewComponent,
     DateLogsComponent,
+    DaybooksComponent,
     ItemCardComponent
   ],
   imports: [

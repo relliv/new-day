@@ -24,6 +24,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import { defaultTimeZone, currentTimeZone } from '@data/models/common/preferences.ts';
 import { BreadcrumbComponent } from '@shared/components/common/breadcrumb/breadcrumb.component';
+import {BreadcrumbModule} from 'xng-breadcrumb';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { BreadcrumbComponent } from '@shared/components/common/breadcrumb/breadc
     MaterialModule,
     ToastrModule.forRoot(),
     MomentModule,
+    BreadcrumbModule,
     // SharedModule,
     // NgxSpinnerModule,
 

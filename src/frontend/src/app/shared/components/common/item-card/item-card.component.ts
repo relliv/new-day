@@ -7,7 +7,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class ItemCardComponent implements OnInit {
   @Output() buttonClick = new EventEmitter<any>();
-  @Input() itemRoute: any;
   @Input() itemTitle: any;
   @Input() topTitle: any;
   @Input() mainTitle: any;

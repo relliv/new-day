@@ -23,14 +23,18 @@ export class BreadcrumbComponent implements OnInit {
     this.router.events
     .pipe(filter(event => event instanceof NavigationEnd))
     .subscribe(() => {
+      console.clear();
+
       this.breadcrumbItems = this.breadcrumbService.createBreadcrumbs(this.activatedRoute.root, this.router.url);
       let currentPage: any = null;
 
       if (this.breadcrumbItems){
-        currentPage = this.breadcrumbItems.pop();
+        currentPage = this.breadcrumbItems[this.breadcrumbItems.length - 1];
       }
 
-      this.titleService.setTitle(`${currentPage ? currentPage.title + ' | ' : ''}${environment.appName}`);
+      console.log('--------',JSON.stringify(this.breadcrumbItems));
+
+      //this.titleService.setTitle(`${currentPage ? currentPage.title + ' | ' : ''}${environment.appName}`);
     });
   }
 

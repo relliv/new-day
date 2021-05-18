@@ -1,0 +1,81 @@
+<!-- Add Item Modal -->
+<ng-template #addDaybookModal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">
+          Add New Daybook
+      </h4>
+
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')" [disabled]="newDaybookAdding">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+
+  <form [formGroup]="newDaybookForm" (ngSubmit)="addDaybook()">
+      <div class="modal-body">
+          <!-- Daybook Title -->
+          <div class="form-group">
+              <label for="daybookTitle">
+                Daybook Title
+              </label>
+
+              <input type="text" class="form-control" id="daybookTitle" placeholder="Enter book title" formControlName="title">
+          </div>
+
+          <!-- Description -->
+          <div class="form-group">
+              <label for="daybookDescription">
+              Description
+            </label>
+
+              <textarea type="text" class="form-control" id="daybookDescription" placeholder="What about this book?" formControlName="description"></textarea>
+          </div>
+      </div>
+
+      <div class="modal-footer">
+          <button type="button" class="btn btn-light" (click)="modal.close('Close click')" [disabled]="newDaybookAdding">
+            Close
+          </button>
+
+          <button type="submit" class="btn btn-secondary" [disabled]="!newDaybookForm.valid" [disabled]="newDaybookAdding">
+            Submit
+          </button>
+      </div>
+  </form>
+</ng-template>
+
+<div class="row" *ngIf="!daybooksLoading">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-8">
+              <h2>
+                  Daybooks
+              </h2>
+          </div>
+
+          <div class="col-4">
+              <ng-template #addNew>
+                  <mat-icon svgIcon="plus" matListIcon></mat-icon>
+                  <span class="ml-1">
+                    Add New Daybook
+                  </span>
+              </ng-template>
+
+              <app-new-button class="float-right" [text]="addNew" [disabled]="daybooksLoading" (buttonClick)="openModal()">
+              </app-new-button>
+          </div>
+      </div>
+
+      <div class="row mt-5">
+          <div class="container-fluid" *ngIf="!daybooksLoading && daybooks">
+              <div class="row">
+                  <app-daybook-card *ngFor="let item of daybooks" [daybook]="item" class="col-sm-12 col-md-6 col-lg-6 col-xl-4 mb-4">
+                      <!-- DayBook Items -->
+                  </app-daybook-card>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Spinner -->
+<ngx-spinner name="dataSpinner" type="ball-triangle-path" size="default" [fullScreen]="false"></ngx-spinner>

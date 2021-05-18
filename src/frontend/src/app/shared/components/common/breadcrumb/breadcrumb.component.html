@@ -1,4 +1,4 @@
-<nav aria-label="breadcrumb">
+<!-- <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item active" aria-current="page">
       <a [routerLink]="['/dashboard']">
@@ -6,10 +6,18 @@
       </a>
     </li>
   </ol>
-</nav>
+</nav> -->
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">
+      <a [routerLink]="['/dashboard']">
+        <mat-icon svgIcon="home"></mat-icon>
+        Dashboard
+        <mat-icon svgIcon="chevron-right"></mat-icon>
+      </a>
+    </li>
+
     <li *ngFor="let item of breadcrumbItems" class="breadcrumb-item">
       <ng-template #activeCrumb>
         <span class="font-weight-bold">
@@ -19,6 +27,7 @@
 
       <a *ngIf="!item.isActive; else activeCrumb" [routerLink]="[item.url]">
         {{item.title}}
+        <mat-icon svgIcon="chevron-right"></mat-icon>
       </a>
     </li>
   </ol>
