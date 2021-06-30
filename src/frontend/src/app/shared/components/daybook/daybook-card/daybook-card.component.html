@@ -1,4 +1,4 @@
-<a [routerLink]="['/day/book/', daybook.id]" class="daybook-card">
+<a [routerLink]="['/day/books/', daybook.id]" class="daybook-card">
     <div class="card h-100">
         <div class="card-body px-3 py-3">
             <!-- Book Title -->
@@ -9,13 +9,16 @@
             </h5>
 
             <!-- Book Descripiton -->
-            <p class="card-text font-weight-light font-italic" *ngIf="daybook.description && daybook.description.length < 100; else descriptionElseBlock;">
+            <p class="card-text font-weight-light font-italic"
+              *ngIf="daybook.description && daybook.description.length < 100; else descriptionElseBlock;">
                 {{daybook.description}}
             </p>
 
             <!-- Book Descripiton Short -->
             <ng-template #descriptionElseBlock>
-                <p class="card-text font-weight-light font-italic" placement="bottom" ngbTooltip="{{daybook.description}}">
+                <p class="card-text font-weight-light font-italic"
+                  placement="bottom"
+                  ngbTooltip="{{daybook.description}}">
                     {{daybook.description | slice:0:100}}...
                 </p>
             </ng-template>

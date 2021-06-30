@@ -91,7 +91,7 @@ export class CalendarViewComponent implements OnInit {
   }
 
   public openDayLog(day: any){
-    this.router.navigate(['day/book', this.daybook.id, 'logs', day.date.format('YYYY-MM-DD')]);
+    this.router.navigate(['day/books', this.daybook.id, 'logs', day.date.format('YYYY-MM-DD')]);
   }
 
   /**

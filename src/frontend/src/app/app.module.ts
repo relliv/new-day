@@ -21,10 +21,9 @@ import {HttpClientModule} from '@angular/common/http';
 import { NavComponent } from '@layout/nav/nav.component';
 import { MatIconRegistry, MatIconModule } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import {BreadcrumbModule} from 'xng-breadcrumb';
 import { defaultTimeZone, currentTimeZone } from '@data/models/common/preferences.ts';
 import { BreadcrumbComponent } from '@shared/components/common/breadcrumb/breadcrumb.component';
-import {BreadcrumbModule} from 'xng-breadcrumb';
 
 @NgModule({
   declarations: [

@@ -12,10 +12,10 @@ const routes: Routes = [
     },
     children: [
       {
-        path: 'book',
+        path: 'books',
         children: [
           {
-            path: 'list',
+            path: '',
             component: DaybooksComponent,
             data: {
               breadcrumb: 'Books'

@@ -1,164 +1,187 @@
-$day-color: #2b2b2b;
-$day-second-color: #fefefe;
+:host {
+  $day-color: #2b2b2b;
+  $day-second-color: #fefefe;
 
-$day-bg: #f2f2f2;
-$today-bg: #c9b754;
-$filled-bg: #a5a5a5;
+  $day-bg: #f2f2f2;
+  $today-bg: #c9b754;
+  $filled-bg: #a5a5a5;
 
-$day-size: 35px;
-$day-round: 5px;
-$today-round: 50%;
-$day-padding: 5px;
-$day-margin: 4px;
+  $day-size: 35px;
+  $day-round: 5px;
+  $today-round: 50%;
+  $day-padding: 5px;
+  $day-margin: 4px;
 
-$filled-today-transpancy: b0;
-$filled-others-transpancy: 90;
+  $filled-today-transpancy: b0;
+  $filled-others-transpancy: 90;
 
-/* Generate random colors for filled days
-Sources:
-https://stackoverflow.com/a/5365036/6940144
-https://stackoverflow.com/a/13017382/6940144
-https://stackoverflow.com/a/15475957/6940144
+  /* Generate random colors for filled days
+    Sources:
+    https://stackoverflow.com/a/5365036/6940144
+    https://stackoverflow.com/a/13017382/6940144
+    https://stackoverflow.com/a/15475957/6940144
 
-var colors = [];
-for (let i = 0; i < 12; i++){
-  let color = '#'+('00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6)+'b0'; // b0 for some transparancy
-  colors.push(color);
-  console.log('%c Oh my heavens! ', `color: ${color}`);
-}
-console.log('$day-fill-colors:'+colors.map(color => color)+';');
-*/
-
-$day-fill-colors:
-#19d3ab,
-#b39627,
-#832c58,
-#333090,
-#1f4bdd,
-#228442,
-#33a8d3,
-#f65693,
-#cc7567,
-#8ecf5f,
-#0f8352,
-#5ec187;
-
-.log-calendar {
-  background-color: #fefefe;
-  box-shadow: 4px 13px 30px 1px rgba(252, 56, 56, 0.1);
-  border-radius: 15px;
-  padding: 10px;
-  padding-bottom: 20px;
-  padding-top: 30px;
-  margin: 5px 10px;
-  height: 100%;
-
-  // calendar title
-  .title{
-    border-top: 0px;
-    border-right: 0px;
-    border-left: 0px;
-    border-bottom-width: 1px;
-    border-style: solid;
-    border-color: #bababa;
-
-    margin-left: 5px;
-    margin-right: 5px;
-    padding-bottom: 10px;
-    margin-bottom: 15px;
-    text-align: center;
-  }
-
-  // day cells
-  .day {
-    background-color: $day-bg;
-    color: $day-color;
-
-    height: $day-size;
-    width: $day-size;
-
-    border: none;
-    border-radius: $day-round;
-
-    padding: $day-padding;
-    margin: $day-margin;
-    padding-top: 5px; // fix vertical align center
-
-    text-align: center;
-    text-decoration: none;
-
-    border: 1px solid #dadada;
-
-    @for $i from 1 through length($day-fill-colors) {
-      &.filled-#{$i} {
-        background: #{nth($day-fill-colors, $i)}#{$filled-others-transpancy};
-        color: $day-second-color;
-      }
-
-      &.filled-today-#{$i} {
-        background: #{nth($day-fill-colors, $i)}#{$filled-others-transpancy};
-        border: 2px dashed #{nth($day-fill-colors, $i)}#{$filled-today-transpancy};
-        border-radius: $today-round;
-        padding-top: 3px; // reset vertical align center
-      }
+    var colors = [];
+    for (let i = 0; i < 12; i++){
+      let color = '#'+('00000'+(Math.random()*(1<<24)|0).toString(16)).slice(-6)+'b0'; // b0 for some transparancy
+      colors.push(color);
+      console.log('%c Oh my heavens! ', `color: ${color}`);
     }
+    console.log('$day-fill-colors:'+colors.map(color => color)+';');
+  */
 
-    &.filled-today-0 {
-      background-color: #fff;
-      border: 2px dashed $day-color;
-      border-radius: $today-round;
-      padding-top: 3px; // reset vertical align center
-    }
+  $day-fill-colors: #14a182,
+  #b39627,
+  #832c58,
+  #333090,
+  #1f4bdd,
+  #228442,
+  #328fb1,
+  #f65693,
+  #cc7567,
+  #8ecf5f,
+  #0f8352,
+  #5ec187;
 
-    &:hover{
-      box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
-      font-size: 18px;
-      transition: all .2s ease-in-out;
-      cursor: pointer;
-    }
+  .log-calendar {
+    background-color: #fefefe;
+    box-shadow: 4px 13px 30px 1px rgba(252, 56, 56, 0.1);
+    border-radius: 15px;
+    padding: 10px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    margin: 5px 10px;
+    height: 100%;
 
-    &:disabled{
-      font-size: 16px !important;
-      cursor: not-allowed;
-    }
-  }
+    // calendar title
+    .title {
+      color: #495057;
+      border-top: 0px;
+      border-right: 0px;
+      border-left: 0px;
+      border-bottom-width: 1px;
+      border-style: solid;
+      border-color: #dddddd;
 
-  &.disabled{
-    opacity: 0.5;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .log-calendar{
-    background-color: #303030;
-
-      // calendar title
-    .title{
-      border-color: #424242;
-      color: #bababa;
+      margin-left: 5px;
+      margin-right: 5px;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      text-align: center;
     }
 
     // day cells
     .day {
-      background-color: #424242;
-      color: #bababa;
-      border: 1px solid #545454;
+      background-color: $day-bg;
+      color: $day-color;
+
+      height: $day-size;
+      width: $day-size;
+
+      border: none;
+      border-radius: $day-round;
+
+      padding: $day-padding;
+      margin: $day-margin;
+      padding-top: 5px; // fix vertical align center
+
+      text-align: center;
+      text-decoration: none;
+
+      border: 1px solid #dadada;
 
       @for $i from 1 through length($day-fill-colors) {
+        &.filled-#{$i} {
+          background: #{nth($day-fill-colors, $i)}#{$filled-others-transpancy};
+          color: $day-second-color;
+        }
+
         &.filled-today-#{$i} {
           background: #{nth($day-fill-colors, $i)}#{$filled-others-transpancy};
-          border: 2px dashed #bababa;
+          border: 2px dashed #{nth($day-fill-colors, $i)}#{$filled-today-transpancy};
           border-radius: $today-round;
           padding-top: 3px; // reset vertical align center
         }
       }
 
       &.filled-today-0 {
-        background-color: #424242;
-        border: 2px dashed #bababa;
+        background-color: #fff;
+        border: 2px dashed $day-color;
         border-radius: $today-round;
         padding-top: 3px; // reset vertical align center
       }
+
+      &:hover {
+        box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+        font-size: 18px;
+        transition: all .2s ease-in-out;
+        cursor: pointer;
+      }
+
+      &:disabled {
+        font-size: 16px !important;
+        cursor: not-allowed;
+      }
+    }
+
+    &.disabled {
+      opacity: 0.5;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .log-calendar {
+      background-color: #303030;
+
+      // calendar title
+      .title {
+        border-color: #424242;
+        color: #bababa;
+      }
+
+      // day cells
+      .day {
+        background-color: #424242;
+        color: #bababa;
+        border: 1px solid #545454;
+
+        @for $i from 1 through length($day-fill-colors) {
+          &.filled-today-#{$i} {
+            background: #{nth($day-fill-colors, $i)}#{$filled-others-transpancy};
+            border: 2px dashed #bababa;
+            border-radius: $today-round;
+            padding-top: 3px; // reset vertical align center
+          }
+        }
+
+        &.filled-today-0 {
+          background-color: #424242;
+          border: 2px dashed #bababa;
+          border-radius: $today-round;
+          padding-top: 3px; // reset vertical align center
+        }
+      }
+    }
+  }
+
+  .tooltip>div {
+    animation-name: delayedFadeIn;
+    animation-duration: 10s;
+    /* Adjust this duration */
+  }
+
+  @keyframes delayedFadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    75% {
+      opacity: 0;
+    }
+
+    /* Set this to 99% for no fade-in. */
+    100% {
+      opacity: 1;
     }
   }
 }
